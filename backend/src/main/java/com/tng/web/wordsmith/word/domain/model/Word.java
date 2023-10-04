@@ -1,5 +1,7 @@
 package com.tng.web.wordsmith.word.domain.model;
 
+import com.tng.web.wordsmith.infrastructure.data.AuditMetadata;
+import com.tng.web.wordsmith.infrastructure.data.BaseAuditEntity;
 import com.tng.web.wordsmith.infrastructure.data.BaseEntity;
 import com.tng.web.wordsmith.infrastructure.data.PartOfSpeech;
 import com.tng.web.wordsmith.infrastructure.data.converters.StringListConverter;
@@ -9,8 +11,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.util.Assert;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +27,8 @@ import java.util.List;
                 @UniqueConstraint(name = "uq_stem_pos", columnNames = {"stem_id", "partOfSpeech"})
         }
 )
-public class Word extends BaseEntity {
+@EntityListeners(AuditingEntityListener.class)
+public class Word extends BaseAuditEntity {
 
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false, updatable = false)
@@ -38,9 +44,9 @@ public class Word extends BaseEntity {
 
     @NotBlank
     @Column(nullable = false)
-    private String meaning;
+    private String translation;
 
-    @Column(length = 512)
+    @Column(length = 1024)
     private String explanation;
 
     @Column(length = 1024)
@@ -65,7 +71,7 @@ public class Word extends BaseEntity {
             return;
         }
         partOfSpeech(dto.getPartOfSpeech());
-        this.meaning = dto.getMeaning();
+        this.translation = dto.getTranslation();
         this.explanation = dto.getExplanation();
         this.example = dto.getExample();
     }

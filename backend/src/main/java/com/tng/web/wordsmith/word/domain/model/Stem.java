@@ -1,17 +1,21 @@
 package com.tng.web.wordsmith.word.domain.model;
 
+import com.tng.web.wordsmith.infrastructure.data.BaseAuditEntity;
 import com.tng.web.wordsmith.infrastructure.data.BaseEntity;
 import com.tng.web.wordsmith.word.StemDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import lombok.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-public class Stem extends BaseEntity {
+@EntityListeners(AuditingEntityListener.class)
+public class Stem extends BaseAuditEntity {
 
     @Column(nullable = false, unique = true)
     @Setter(value = AccessLevel.PRIVATE)

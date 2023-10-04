@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.time.Instant;
 import java.util.List;
 
 @Data
@@ -26,9 +27,13 @@ public final class WordDto {
 
     @NotBlank
     @JsonProperty(required = true)
-    private String meaning;
+    private String translation;
     private String explanation;
     private String example;
+
+    private Instant created;
+    private Instant lastModified;
+
 
     public static WordDto from(@NotNull @Valid Word word) {
         StemDto stemDto = StemDto.from(word.getStem());
@@ -37,9 +42,11 @@ public final class WordDto {
         dto.setStem(stemDto);
         dto.setPartOfSpeech(word.getPartOfSpeech().getCode());
         dto.setVariants(word.getVariants());
-        dto.setMeaning(word.getMeaning());
+        dto.setTranslation(word.getTranslation());
         dto.setExplanation(word.getExplanation());
         dto.setExample(word.getExample());
+        dto.setCreated(word.getCreated());
+        dto.setLastModified(word.getLastModified());
         return dto;
     }
 }
