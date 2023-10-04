@@ -7,10 +7,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.Optional;
 
-@Valid
+@Validated
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -45,6 +46,6 @@ public class StemServiceImpl implements StemService {
 
     @Override
     public Optional<Stem> findByStem(String stem) {
-        return repository.findByStemIgnoreCase(stem);
+        return repository.findByTermIgnoreCase(stem);
     }
 }

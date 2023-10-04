@@ -6,6 +6,9 @@ import com.tng.web.wordsmith.word.domain.repository.WordRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,5 +46,12 @@ public class WordServiceImpl implements WordService {
         return repository.findByStemTermIgnoreCaseOrderByPartOfSpeech(stem)
                 .map(WordDto::from)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<WordDto> findWords(Pageable pageable) {
+        log.debug("Finding words with provided query parameters: pageable={}", pageable);
+        return repository.findAll(pageable != null ? pageable : Pageable.unpaged())
+                .map(WordDto::from);
     }
 }

@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface StemRepository extends BaseRepository<Stem> {
 
-    Optional<Stem> findByStemIgnoreCase(String stem);
+    Optional<Stem> findByTermIgnoreCase(String stem);
 }

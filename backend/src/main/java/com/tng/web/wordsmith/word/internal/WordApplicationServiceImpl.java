@@ -6,6 +6,8 @@ import com.tng.web.wordsmith.word.domain.service.WordService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,5 +36,11 @@ public class WordApplicationServiceImpl implements WordApplicationService {
     public List<WordDto> findWordsByStem(String stem) {
         log.info("Attempting to find words with stem: {}", stem);
         return service.findWordsByStem(stem);
+    }
+
+    @Override
+    public Page<WordDto> findWords(Pageable pageRequest) {
+        log.info("Finding all words with page request {}", pageRequest);
+        return service.findWords(pageRequest);
     }
 }

@@ -1,5 +1,7 @@
 package com.tng.web.wordsmith.word;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tng.web.wordsmith.word.domain.model.Stem;
 import jakarta.validation.Valid;
@@ -7,6 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @Valid
 public final class StemDto {
