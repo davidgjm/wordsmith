@@ -1,21 +1,19 @@
 package com.tng.web.wordsmith.word.domain.model;
 
-import com.tng.web.wordsmith.infrastructure.data.AuditMetadata;
 import com.tng.web.wordsmith.infrastructure.data.BaseAuditEntity;
-import com.tng.web.wordsmith.infrastructure.data.BaseEntity;
 import com.tng.web.wordsmith.infrastructure.data.PartOfSpeech;
 import com.tng.web.wordsmith.infrastructure.data.converters.StringListConverter;
+import com.tng.web.wordsmith.word.CreateWordRequest;
 import com.tng.web.wordsmith.word.WordDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +28,7 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 public class Word extends BaseAuditEntity {
 
+    @NotNull
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false, updatable = false)
     private Stem stem;
@@ -37,6 +36,9 @@ public class Word extends BaseAuditEntity {
     @NotNull
     @Column(nullable = false)
     private PartOfSpeech partOfSpeech;
+
+    @Column(length = 64)
+    private String ipa;
 
     @Convert(converter = StringListConverter.class)
     @Column(length = 255)
@@ -61,18 +63,36 @@ public class Word extends BaseAuditEntity {
         this.variants.add(variant);
     }
 
+    public final void addVariants(List<String> values) {
+        if (!CollectionUtils.isEmpty(values)) {
+            this.variants.addAll(values);
+        }
+    }
 
     /**
      * Update entity properties with information included in the provided DTO.
      * @param dto
      */
-    public void updateProperties(WordDto dto) {
+    public void updateFields(WordDto dto) {
         if (dto == null) {
             return;
         }
         partOfSpeech(dto.getPartOfSpeech());
-        this.translation = dto.getTranslation();
-        this.explanation = dto.getExplanation();
-        this.example = dto.getExample();
+        setIpa(dto.getIpa());
+        setTranslation(dto.getTranslation());
+        setExplanation(dto.getExplanation());
+        setExample(dto.getExample());
+    }
+
+    public void updateFields(CreateWordRequest request) {
+        if (request == null) {
+            return;
+        }
+        partOfSpeech(request.getPartOfSpeech());
+        setIpa(request.getIpa());
+        setTranslation(request.getTranslation());
+        setExplanation(request.getExplanation());
+        setExample(request.getExample());
+        this.addVariants(request.getVariants());
     }
 }

@@ -16,4 +16,6 @@ public interface WordApplicationService {
     List<WordDto> findWordsByStem(@NotBlank String stem);
 
     Page<WordDto> findWords(Pageable pageRequest);
+
+    WordDto addWord(CreateWordRequest request);
 }

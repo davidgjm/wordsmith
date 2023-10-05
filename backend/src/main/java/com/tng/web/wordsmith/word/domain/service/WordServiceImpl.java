@@ -3,12 +3,12 @@ package com.tng.web.wordsmith.word.domain.service;
 import com.tng.web.wordsmith.word.WordDto;
 import com.tng.web.wordsmith.word.domain.model.Word;
 import com.tng.web.wordsmith.word.domain.repository.WordRepository;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,10 +30,11 @@ public class WordServiceImpl implements WordService {
         var stem = stemService.save(dto.getStem());
         Word word = new Word();
         word.setStem(stem);
-        word.updateProperties(dto);
+        word.updateFields(dto);
         return repository.saveAndFlush(word);
     }
 
+    @Transactional
     @Override
     public List<WordDto> findWordsByStemId(Long stemId) {
         return repository.findByStemIdOrderByPartOfSpeech(stemId)
@@ -41,6 +42,7 @@ public class WordServiceImpl implements WordService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public List<WordDto> findWordsByStem(String stem) {
         return repository.findByStemTermIgnoreCaseOrderByPartOfSpeech(stem)
@@ -53,5 +55,11 @@ public class WordServiceImpl implements WordService {
         log.debug("Finding words with provided query parameters: pageable={}", pageable);
         return repository.findAll(pageable != null ? pageable : Pageable.unpaged())
                 .map(WordDto::from);
+    }
+
+    @Override
+    public WordDto save(Word word) {
+        return WordDto.from(repository.saveAndFlush(word));
+
     }
 }

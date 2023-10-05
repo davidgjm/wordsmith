@@ -6,7 +6,10 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface StemService {
@@ -18,4 +21,10 @@ public interface StemService {
     Optional<Stem> findById(@NotNull @Positive Long id);
 
     Optional<Stem> findByStem(@NotBlank String stem);
+
+    List<Long> pickRandomStemIds(@Positive int count);
+
+    Page<Stem> pickRandomStems(@Positive int count, Pageable pageable);
+
+    Page<Stem> findAll(Pageable pageable);
 }

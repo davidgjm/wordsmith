@@ -21,13 +21,9 @@ public class ChallengeRecord extends BaseEntity {
     @Column(nullable = false, updatable = false)
     private Long stemId;
 
-    private Long wordId;
-
     @CreatedDate
     private Instant attemptedAt;
 
-    @LastModifiedDate
-    private Instant lastModified;
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false, updatable = false, length = 64)
@@ -39,7 +35,6 @@ public class ChallengeRecord extends BaseEntity {
         var record = new ChallengeRecord();
         record.setId(value.getId());
         record.setStemId(value.getStemId());
-        record.setWordId(value.getWordId());
         record.setResult(value.getResult());
         record.setNote(value.getNote());
         return record;

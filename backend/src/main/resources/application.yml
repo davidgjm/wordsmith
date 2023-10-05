@@ -7,3 +7,7 @@ spring:
     open-in-view: false
   datasource:
     generate-unique-name: false
+########################################################################################################################
+
+app:
+  stem-selection-size: 20

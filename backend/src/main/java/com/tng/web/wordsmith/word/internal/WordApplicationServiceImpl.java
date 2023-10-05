@@ -1,14 +1,20 @@
 package com.tng.web.wordsmith.word.internal;
 
+import com.tng.web.wordsmith.word.CreateWordRequest;
 import com.tng.web.wordsmith.word.WordApplicationService;
 import com.tng.web.wordsmith.word.WordDto;
+import com.tng.web.wordsmith.word.domain.model.Stem;
+import com.tng.web.wordsmith.word.domain.model.Word;
+import com.tng.web.wordsmith.word.domain.service.StemService;
 import com.tng.web.wordsmith.word.domain.service.WordService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.ErrorResponseException;
 
 import java.util.List;
 
@@ -18,6 +24,7 @@ import java.util.List;
 @Valid
 public class WordApplicationServiceImpl implements WordApplicationService {
     private final WordService service;
+    private final StemService stemService;
 
     @Override
     public WordDto addWord(WordDto wordDto) {
@@ -42,5 +49,16 @@ public class WordApplicationServiceImpl implements WordApplicationService {
     public Page<WordDto> findWords(Pageable pageRequest) {
         log.info("Finding all words with page request {}", pageRequest);
         return service.findWords(pageRequest);
+    }
+
+    @Override
+    public WordDto addWord(CreateWordRequest request) {
+        log.info("Creating new word: {}", request);
+        var stemId = request.getStemId();
+        Stem stem = stemService.findById(stemId).orElseThrow(() -> new ErrorResponseException(HttpStatus.NOT_FOUND));
+        var word = new Word();
+        word.setStem(stem);
+        word.updateFields(request);
+        return service.save(word);
     }
 }

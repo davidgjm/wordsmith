@@ -18,28 +18,21 @@ public final class ChallengeRecordDto {
     @NotNull
     private Long stemId;
 
-    @Positive
-    private Long wordId;
+    @NotNull
+    private AttemptResult result;
 
     @PastOrPresent
     private Instant attemptedAt;
 
-    @NotNull
-    private AttemptResult result;
-
     private String note;
-
-    private Instant lastModified;
 
     public static ChallengeRecordDto from(ChallengeRecord value) {
         var dto = new ChallengeRecordDto();
         dto.setId(value.getId());
         dto.setStemId(value.getStemId());
-        dto.setWordId(value.getWordId());
         dto.setAttemptedAt(value.getAttemptedAt());
         dto.setResult(value.getResult());
         dto.setNote(value.getNote());
-        dto.setLastModified(value.getLastModified());
         return dto;
     }
 }

@@ -5,6 +5,8 @@ import com.tng.web.wordsmith.challenges.domain.model.ChallengeRecord;
 import com.tng.web.wordsmith.challenges.domain.repository.ChallengeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -17,6 +19,11 @@ public class ChallengeServiceImpl implements ChallengeService {
     @Override
     public ChallengeRecord save(ChallengeRecordDto dto) {
         return repository.save(ChallengeRecord.from(dto));
+    }
+
+    @Override
+    public Page<ChallengeRecord> findByStemId(Long stemId, Pageable pageRequest) {
+        return repository.findByStemIdOrderByAttemptedAtDesc(stemId, pageRequest);
     }
 
 }
