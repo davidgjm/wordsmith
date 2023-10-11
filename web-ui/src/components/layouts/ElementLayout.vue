@@ -6,7 +6,7 @@ import { RouterView, RouterLink } from 'vue-router'
     <el-container>
       <el-header height="200">
         <el-menu
-          :default-active="activeIndex"
+
           class="el-menu-demo"
           mode="horizontal"
           :ellipsis="false"

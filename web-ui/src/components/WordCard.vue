@@ -1,5 +1,6 @@
 <script setup>
 import { Check, Delete, Edit, Message, Search, Star, View, Discount } from '@element-plus/icons-vue'
+defineProps(['id','stem'])
 </script>
 <template>
   <el-card shadow="hover" class="box-card">
@@ -9,7 +10,7 @@ import { Check, Delete, Edit, Message, Search, Star, View, Discount } from '@ele
           >crossword</span
         >
         <el-text class="mx-1" type="primary" size="large" tag="b" style="font-weight: bold">
-          <slot name="stem"></slot>
+          {{ stem }}
         </el-text>
 
         <el-button type="warning" :icon="View" circle />

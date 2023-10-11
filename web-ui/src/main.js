@@ -3,6 +3,9 @@ import './assets/main.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
 import 'material-symbols';
 
 // import 'element-plus/dist/index.css'
@@ -17,6 +20,9 @@ const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
+
+app.use(VueAxios, axios)
+app.provide('axios', app.config.globalProperties.axios)
 
 
 app.use(ElementPlus, { size: 'small', zIndex: 3000 })
