@@ -21,6 +21,9 @@ const app = createApp(App)
 app.use(createPinia())
 app.use(router)
 
+axios.defaults.baseURL = 'http://localhost:8080/api/'
+axios.defaults.headers.common['Access-Control-Allow-Origin']='*'
+
 app.use(VueAxios, axios)
 app.provide('axios', app.config.globalProperties.axios)
 
