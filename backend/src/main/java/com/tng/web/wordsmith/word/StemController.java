@@ -1,13 +1,14 @@
 package com.tng.web.wordsmith.word;
 
-import com.tng.web.wordsmith.infrastructure.web.SlicedResponse;
 import com.tng.web.wordsmith.infrastructure.web.PaginationCriteria;
+import com.tng.web.wordsmith.infrastructure.web.SlicedResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
+@CrossOrigin
 @RestController
 @RequestMapping("/api/stems/v1")
 @Valid
