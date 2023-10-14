@@ -1,6 +1,10 @@
 <script setup>
-import { Check, Delete, Edit, Message, Search, Star, View, Discount } from '@element-plus/icons-vue'
-defineProps(['id','stem'])
+import { Check, Delete, Edit, Message, Search, Star, View, Discount, Key } from '@element-plus/icons-vue'
+defineProps({
+  id: String,
+  stem: String,
+  showWord: Function
+})
 </script>
 <template>
   <el-card shadow="hover" class="box-card">
@@ -13,7 +17,7 @@ defineProps(['id','stem'])
           {{ stem }}
         </el-text>
 
-        <el-button type="warning" :icon="View" circle />
+        
         <div>
           <el-dropdown split-button type="success">
             <span class="material-symbols-outlined">shopping_cart_checkout</span>
