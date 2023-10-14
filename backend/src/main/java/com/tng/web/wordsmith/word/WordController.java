@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
+@CrossOrigin
 @RestController
 @RequestMapping("/api/words/v1")
 @Valid
@@ -19,14 +20,21 @@ public class WordController {
     private final WordApplicationService applicationService;
 
     @GetMapping
-    public SlicedResponse<WordDto> loadWords(@Valid PaginationCriteria paginationCriteria) {
-        log.info("Loading words with page request {}", paginationCriteria);
+    public SlicedResponse<WordDto> loadWords(@Valid PaginationCriteria paginationCriteria, @RequestParam(required = false) @Positive Long stemId) {
+        log.info("Loading words with stem id #{} page request {}", stemId, paginationCriteria);
         if (paginationCriteria == null) {
             log.info("No pagination query parameter provided! Using default values");
             paginationCriteria = new PaginationCriteria();
         }
-        var page = applicationService.findWords(paginationCriteria.pageRequest());
-        return new SlicedResponse<>(page);
+        if (stemId == null) {
+            var page = applicationService.findWords(paginationCriteria.pageRequest());
+
+            return new SlicedResponse<>(page);
+        } else {
+            log.info("Loading words for stem {}", stemId);
+            var result = applicationService.findWordsByStemId(stemId);
+            return SlicedResponse.from(result);
+        }
     }
 
     @PostMapping
@@ -37,17 +45,18 @@ public class WordController {
         return result;
     }
 
-    @GetMapping("/{stemId}")
-    public SlicedResponse<WordDto> findWordsByStem(@NotNull @Positive @PathVariable Long stemId) {
-        log.info("Loading words for stem {}", stemId);
-        var result = applicationService.findWordsByStemId(stemId);
-        return SlicedResponse.from(result);
+    @GetMapping("/{wordId}")
+    public ApiResponse<WordDto> getWordDetails(@NotNull @Positive @PathVariable Long wordId) {
+        log.info("Loading word details for {}", wordId);
+        var result = applicationService.findWordById(wordId);
+        return ApiResponse.from(result);
     }
 
-    @PostMapping("/{stemId}")
-    public ApiResponse<WordDto> newWord(@NotNull @Positive @PathVariable Long stemId, @NotNull @Valid @RequestBody CreateWordRequest request) {
-        log.info("Received create to add new word for stem {}. Request details: {}", stemId, request);
-        request.setStemId(stemId);
-        return ApiResponse.from(applicationService.addWord(request));
+
+    @PutMapping("/{wordId}")
+    public ApiResponse<WordDto> updateWord(@NotNull @Positive @PathVariable Long wordId, @NotNull @Valid @RequestBody UpdateWordRequest request) {
+        log.info("Updating word for {}", wordId);
+        request.setWordId(wordId);
+        return ApiResponse.from(applicationService.update(request));
     }
 }

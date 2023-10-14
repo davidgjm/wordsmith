@@ -4,6 +4,7 @@ import com.tng.web.wordsmith.infrastructure.data.BaseAuditEntity;
 import com.tng.web.wordsmith.infrastructure.data.PartOfSpeech;
 import com.tng.web.wordsmith.infrastructure.data.converters.StringListConverter;
 import com.tng.web.wordsmith.word.CreateWordRequest;
+import com.tng.web.wordsmith.word.UpdateWordRequest;
 import com.tng.web.wordsmith.word.WordDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -71,6 +72,7 @@ public class Word extends BaseAuditEntity {
 
     /**
      * Update entity properties with information included in the provided DTO.
+     *
      * @param dto
      */
     public void updateFields(WordDto dto) {
@@ -95,4 +97,18 @@ public class Word extends BaseAuditEntity {
         setExample(request.getExample());
         this.addVariants(request.getVariants());
     }
+
+    public void updateFields(UpdateWordRequest request) {
+        if (request == null) {
+            return;
+        }
+        partOfSpeech(request.getPartOfSpeech());
+        setIpa(request.getIpa());
+        setTranslation(request.getTranslation());
+        setExplanation(request.getExplanation());
+        setExample(request.getExample());
+        this.addVariants(request.getVariants());
+    }
+
+
 }

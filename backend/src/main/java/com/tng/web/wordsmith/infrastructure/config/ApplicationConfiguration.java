@@ -7,4 +7,13 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(AppProperties.class)
 public class ApplicationConfiguration {
 
+//    @Configuration
+//    @EnableWebMvc
+//    static class WebConfig implements WebMvcConfigurer {
+//
+//        @Override
+//        public void addCorsMappings(CorsRegistry registry) {
+//            registry.addMapping("/**");
+//        }
+//    }
 }

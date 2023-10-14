@@ -1,6 +1,8 @@
 package com.tng.web.wordsmith.infrastructure.data;
 
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.ErrorResponseException;
 
 import java.util.stream.Stream;
 
@@ -8,6 +10,7 @@ import java.util.stream.Stream;
 public enum PartOfSpeech {
     NOUN("n.", "Noun"),
     PRONOUN("pron.", "pronoun"),
+    VERB("verb.", "transitive verb"),
     VERB_TRANSITIVE("vt.", "transitive verb"),
     VERB_INTRANSITIVE("vi.", "intransitive verb"),
     ADJECTIVE("adj.", "adjective"),
@@ -29,7 +32,7 @@ public enum PartOfSpeech {
         return Stream.of(PartOfSpeech.values())
                 .filter(c -> c.getCode().equals(code))
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new)
+                .orElseThrow(() -> new ErrorResponseException(HttpStatus.BAD_REQUEST))
         ;
     }
 }

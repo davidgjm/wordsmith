@@ -1,6 +1,7 @@
 package com.tng.web.wordsmith.word.internal;
 
 import com.tng.web.wordsmith.word.CreateWordRequest;
+import com.tng.web.wordsmith.word.UpdateWordRequest;
 import com.tng.web.wordsmith.word.WordApplicationService;
 import com.tng.web.wordsmith.word.WordDto;
 import com.tng.web.wordsmith.word.domain.model.Stem;
@@ -60,5 +61,22 @@ public class WordApplicationServiceImpl implements WordApplicationService {
         word.setStem(stem);
         word.updateFields(request);
         return service.save(word);
+    }
+
+    @Override
+    public WordDto update(UpdateWordRequest request) {
+        log.info("Attempting to update word. Request details: {}", request);
+        Word word = findWord(request.getWordId());
+        word.updateFields(request);
+        return service.save(word);
+    }
+
+    @Override
+    public WordDto findWordById(Long wordId) {
+        return WordDto.from(findWord(wordId));
+    }
+
+    private Word findWord(Long wordId) {
+        return service.findWordById(wordId).orElseThrow(() -> new ErrorResponseException(HttpStatus.NOT_FOUND));
     }
 }

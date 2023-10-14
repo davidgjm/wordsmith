@@ -5,8 +5,8 @@ import jakarta.persistence.Converter;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Converter(autoApply = true)
@@ -20,6 +20,6 @@ public class StringListConverter implements AttributeConverter<List<String>, Str
 
     @Override
     public List<String> convertToEntityAttribute(String string) {
-        return StringUtils.hasText(string) ? Arrays.asList(string.split(DELIMITER)) : Collections.emptyList();
+        return StringUtils.hasText(string) ? Arrays.asList(string.split(DELIMITER)) : new ArrayList<>();
     }
 }

@@ -1,7 +1,6 @@
 package com.tng.web.wordsmith.word.domain.model;
 
 import com.tng.web.wordsmith.infrastructure.data.BaseAuditEntity;
-import com.tng.web.wordsmith.infrastructure.data.BaseEntity;
 import com.tng.web.wordsmith.word.StemDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +16,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public class Stem extends BaseAuditEntity {
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, updatable = false)
     @Setter(value = AccessLevel.PRIVATE)
     private String term;
 
