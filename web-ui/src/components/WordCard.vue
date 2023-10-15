@@ -1,5 +1,6 @@
 <script setup>
-import { Check, Delete, Edit, Message, Search, Star, View, Discount, Key } from '@element-plus/icons-vue'
+import MaterialSymbol from './icons/MaterialSymbol.vue'
+
 defineProps({
   id: String,
   stem: String,
@@ -10,9 +11,7 @@ defineProps({
   <el-card shadow="hover" class="box-card">
     <template #header>
       <div class="card-header">
-        <span class="material-symbols-outlined" style="font-size: 32px; color: #409eff"
-          >crossword</span
-        >
+        <MaterialSymbol icon="crossword" class="primary large" />
         <el-text class="mx-1" type="primary" size="large" tag="b" style="font-weight: bold">
           {{ stem }}
         </el-text>

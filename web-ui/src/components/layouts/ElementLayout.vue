@@ -1,5 +1,6 @@
 <script setup>
 import { RouterView, RouterLink } from 'vue-router'
+import MaterialSymbol from '../icons/MaterialSymbol.vue';
 </script>
 <template>
   <div>
@@ -18,14 +19,13 @@ import { RouterView, RouterLink } from 'vue-router'
           </el-menu-item>
           <div class="flex-grow" />
           <el-menu-item index="1">
-            <div>
-              <RouterLink to="/">Home</RouterLink>
-            </div>
+            <RouterLink to="/"><MaterialSymbol class="primary xlarge" icon="home" /></RouterLink>
           </el-menu-item>
           <el-menu-item index="2">
-            <div>
-              <RouterLink to="/about">About</RouterLink>
-            </div>
+            <RouterLink to="/admin"><MaterialSymbol class="primary xlarge" icon="edit" /></RouterLink>
+          </el-menu-item>
+          <el-menu-item index="3">
+            <RouterLink to="/about">About</RouterLink>
           </el-menu-item>
         </el-menu>
       </el-header>

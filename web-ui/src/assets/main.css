@@ -15,6 +15,52 @@ a,
   transition: 0.4s;
 }
 
+.primary {
+  color: #409eff;
+}
+
+.success {
+  color: #67C23A;
+}
+
+.warning {
+  color: #E6A23C;
+}
+
+.danger {
+  color: #F56C6C;
+}
+
+.info {
+  color: #909399;
+}
+
+.material-symbols-outlined.xlarge {
+  font-size: 48px; 
+  font-variation-settings: 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
+
+.material-symbols-outlined.large {
+  font-size: 32px; 
+  font-variation-settings: 'wght' 400, 'GRAD' 0, 'opsz' 32;
+}
+
+.material-symbols-outlined.normal {
+  font-size: 24px; 
+  font-variation-settings: 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.material-symbols-outlined.small {
+  font-size: 20px; 
+  font-variation-settings: 'wght' 400, 'GRAD' 0, 'opsz' 20;
+}
+
+
+.material-symbols-outlined.filled {
+  font-variation-settings: 'FILL' 1;
+}
+
+
 @media (hover: hover) {
   a:hover {
     background-color: hsla(160, 100%, 37%, 0.2);

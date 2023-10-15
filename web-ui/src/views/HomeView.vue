@@ -3,17 +3,15 @@
     <el-space :size="30" wrap>
       <WordCard v-for="(o, key) in stems" :key="key" :stem="o.term" class="word-card">
         <template #body>
-          <el-menu mode="horizontal">
+          <el-menu mode="horizontal" :ellipsis="false">
             <el-menu-item index="1" @click="getWordsByStemId(o.id, key)">
-              <!-- <el-icon><View /></el-icon> -->
-              <span class="material-symbols-outlined">dictionary</span>
+              <MaterialSymbol class="warning" icon="dictionary"/>
             </el-menu-item>
             <el-menu-item index="2">
-              <!-- <el-icon><Link/></el-icon> -->
-              <span class="material-symbols-outlined"> linked_services </span>
+              <MaterialSymbol icon="linked_services"/>
             </el-menu-item>
             <el-menu-item index="3">
-              <el-icon><document /></el-icon>
+              <MaterialSymbol icon="scan"/>
             </el-menu-item>
           </el-menu>
 
@@ -97,18 +95,6 @@
   </div>
 </template>
 <script setup>
-import {
-  Link,
-  Delete,
-  Edit,
-  Message,
-  Search,
-  Star,
-  View,
-  Discount,
-  Key
-} from '@element-plus/icons-vue'
-
 import { onMounted } from 'vue'
 import WordCard from '../components/WordCard.vue'
 import { ref } from 'vue'
@@ -125,6 +111,7 @@ const pagination = ref({
 })
 
 import api from 'axios'
+import MaterialSymbol from '../components/icons/MaterialSymbol.vue';
 
 const getStems = async function () {
   const res = await api.get(`/stems/v1?pageNumber=${pagination.value.pageNumber}`)
