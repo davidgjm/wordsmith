@@ -18,7 +18,7 @@ public final class Pagination {
         return Pagination.builder()
                 .totalPages(page.getTotalPages())
                 .totalElements(page.getTotalElements())
-                .pageNumber(page.getNumber())
+                .pageNumber(page.getNumber()+1)
                 .pageSize(page.getSize())
                 .first(page.isFirst())
                 .last(page.isLast())

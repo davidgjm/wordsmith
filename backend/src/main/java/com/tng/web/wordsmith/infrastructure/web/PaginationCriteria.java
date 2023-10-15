@@ -1,13 +1,11 @@
 package com.tng.web.wordsmith.infrastructure.web;
 
-import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.util.StringUtils;
-import org.springframework.validation.annotation.Validated;
 
 @Data
 public final class PaginationCriteria {
@@ -28,6 +26,8 @@ public final class PaginationCriteria {
         } else if (StringUtils.hasText(getSortBy())) {
             sort = Sort.by(getSortBy());
         }
-        return PageRequest.of(getPageNumber(), getPageSize(), sort);
+        return PageRequest.of(getPageNumber() > 0 ? getPageNumber() - 1 : 0,
+                getPageSize(),
+                sort);
     }
 }
