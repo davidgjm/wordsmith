@@ -10,7 +10,6 @@ import { RouterView, RouterLink } from 'vue-router'
           class="el-menu-demo"
           mode="horizontal"
           :ellipsis="false"
-          @select="handleSelect"
         >
           <el-menu-item index="0">
             <div>

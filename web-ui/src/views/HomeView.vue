@@ -1,22 +1,16 @@
 <template>
   <div v-if="stems.length > 0">
     <el-space :size="30" wrap>
-      <WordCard v-for="(o, key) in stems" :id="o.id" :key="key" :stem="o.term" class="word-card">
+      <WordCard v-for="(o, key) in stems" :key="key" :stem="o.term" class="word-card">
         <template #body>
-
-          <el-menu 
-
-            mode="horizontal"
-          >
+          <el-menu mode="horizontal">
             <el-menu-item index="1" @click="getWordsByStemId(o.id, key)">
               <!-- <el-icon><View /></el-icon> -->
               <span class="material-symbols-outlined">dictionary</span>
             </el-menu-item>
-            <el-menu-item index="2" >
+            <el-menu-item index="2">
               <!-- <el-icon><Link/></el-icon> -->
-                          <span class="material-symbols-outlined">
-            linked_services
-            </span>
+              <span class="material-symbols-outlined"> linked_services </span>
             </el-menu-item>
             <el-menu-item index="3">
               <el-icon><document /></el-icon>
@@ -34,13 +28,13 @@
               <el-text class="mx-1" type="info">Created</el-text>
             </el-col>
             <el-col :span="7">
-              <el-text type="small">{{ new Date(o.created).toLocaleString('zh-CN') }}</el-text>
+              <el-text size="small">{{ new Date(o.created).toLocaleString('zh-CN') }}</el-text>
             </el-col>
             <el-col :span="3">
               <el-text class="mx-1" type="info">Updated</el-text>
             </el-col>
             <el-col :span="7">
-              <el-text type="small">{{ new Date(o.lastModified).toLocaleString('zh-CN') }}</el-text>
+              <el-text size="small">{{ new Date(o.lastModified).toLocaleString('zh-CN') }}</el-text>
             </el-col>
           </el-row>
 
@@ -90,8 +84,11 @@
       <el-pagination
         background
         :hide-on-single-page="true"
+        :page-size="pagination.pageSize"
+        :current-page="pagination.pageNumber"
+        @update:current-page="requestStemsByPage"
         layout="prev, pager, next"
-        :total="500"
+        :total="pagination.totalElements"
       />
     </div>
   </div>
@@ -118,13 +115,22 @@ import { ref } from 'vue'
 
 const stems = ref([])
 const words = ref([])
-const pagination = ref(null)
+const pagination = ref({
+  totalPages: 0,
+  totalElements: 0,
+  pageNumber: 1,
+  pageSize: 10,
+  first: false,
+  last: false
+})
 
 import api from 'axios'
 
 const getStems = async function () {
-  const res = await api.get('/stems/v1')
+  const res = await api.get(`/stems/v1?pageNumber=${pagination.value.pageNumber}`)
   stems.value = res.data.data
+
+  pagination.value = res.data.pagination
 }
 
 const getWordsByStemId = async function (stemId, index) {
@@ -133,6 +139,12 @@ const getWordsByStemId = async function (stemId, index) {
   const clone = words.value.slice()
   clone[index] = res.data.data
   words.value = clone
+}
+
+const requestStemsByPage = async function (pageNumber){
+  console.log("Page click detected. Current pagination info", pageNumber)
+  pagination.value.pageNumber=pageNumber
+  getStems()
 }
 
 onMounted(() => {
