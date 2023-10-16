@@ -4,6 +4,8 @@ import com.tng.web.wordsmith.infrastructure.web.ApiResponse;
 import com.tng.web.wordsmith.infrastructure.web.PaginationCriteria;
 import com.tng.web.wordsmith.infrastructure.web.SlicedResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
@@ -58,5 +60,12 @@ public class WordController {
         log.info("Updating word for {}", wordId);
         request.setWordId(wordId);
         return ApiResponse.from(applicationService.update(request));
+    }
+
+    @GetMapping("/search/words")
+    public SlicedResponse<WordDto> searchWordsByStemOrTranslation(@NotBlank @Min(value = 3) String keyword) {
+        log.info("Received request to search stem or words with keyword {}", keyword);
+        keyword = keyword.trim();
+        return SlicedResponse.from(applicationService.findWordsByStemOrTranslation(keyword));
     }
 }

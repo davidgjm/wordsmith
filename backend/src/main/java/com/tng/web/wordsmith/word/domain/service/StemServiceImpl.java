@@ -3,7 +3,6 @@ package com.tng.web.wordsmith.word.domain.service;
 import com.tng.web.wordsmith.word.StemDto;
 import com.tng.web.wordsmith.word.domain.model.Stem;
 import com.tng.web.wordsmith.word.domain.repository.StemRepository;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -31,15 +30,14 @@ public class StemServiceImpl implements StemService {
     @Override
     public Stem save(StemDto value) {
         log.debug("Attempting to save dto value: {}", value);
-        if (value.getId() != null) {
-            var optional = repository.findById(value.getId())
-                    .filter(s -> !s.getTerm().equalsIgnoreCase(value.getTerm().trim()));
-            optional.ifPresent(stem -> {
-                log.error("A different stem wit the id already exists! {}", stem);
-                throw new IllegalStateException("term conflict");
-            });
+        var stemOptional = repository.findByTermIgnoreCase(value.getTerm());
+        if (stemOptional.isPresent()) {
+            var stem = stemOptional.get();
+            log.debug("Stem already exists. Given: {}, persisted: {}", value, stem);
+            stem.setIpa(value.getIpa());
+            stem.setNote(value.getNote());
+            return repository.saveAndFlush(stem);
         }
-
         return repository.saveAndFlush(Stem.from(value));
     }
 

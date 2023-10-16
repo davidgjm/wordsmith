@@ -22,4 +22,6 @@ public interface WordApplicationService {
     WordDto update(@NotNull @Valid UpdateWordRequest request);
 
     WordDto findWordById(@NotNull @Positive Long wordId);
+
+    List<WordDto> findWordsByStemOrTranslation(@NotBlank String keyword);
 }

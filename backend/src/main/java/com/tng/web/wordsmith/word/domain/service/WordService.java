@@ -3,6 +3,7 @@ package com.tng.web.wordsmith.word.domain.service;
 import com.tng.web.wordsmith.word.WordDto;
 import com.tng.web.wordsmith.word.domain.model.Word;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import org.springframework.data.domain.Page;
@@ -24,4 +25,6 @@ public interface WordService {
     WordDto save(@NotNull @Valid Word word);
 
     Optional<Word> findWordById(@NotNull @Positive Long id);
+
+    List<WordDto> findWordsByStemOrMeaningFuzzy(@NotBlank String keyword);
 }

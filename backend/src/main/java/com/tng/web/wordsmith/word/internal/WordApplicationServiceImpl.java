@@ -76,6 +76,12 @@ public class WordApplicationServiceImpl implements WordApplicationService {
         return WordDto.from(findWord(wordId));
     }
 
+    @Override
+    public List<WordDto> findWordsByStemOrTranslation(String keyword) {
+        log.info("Attempting to find words with stem/meaning like {}", keyword);
+        return service.findWordsByStemOrMeaningFuzzy(keyword);
+    }
+
     private Word findWord(Long wordId) {
         return service.findWordById(wordId).orElseThrow(() -> new ErrorResponseException(HttpStatus.NOT_FOUND));
     }

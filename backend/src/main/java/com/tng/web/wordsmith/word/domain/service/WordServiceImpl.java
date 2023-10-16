@@ -68,4 +68,12 @@ public class WordServiceImpl implements WordService {
     public Optional<Word> findWordById(Long id) {
         return repository.findById(id);
     }
+
+    @Transactional
+    @Override
+    public List<WordDto> findWordsByStemOrMeaningFuzzy(String keyword) {
+        return repository.findByStemTermIgnoreCaseContaining(keyword)
+                .map(WordDto::from)
+                .collect(Collectors.toList());
+    }
 }

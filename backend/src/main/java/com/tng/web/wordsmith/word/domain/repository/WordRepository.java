@@ -9,4 +9,7 @@ public interface WordRepository extends BaseRepository<Word> {
     Stream<Word> findByStemIdOrderByPartOfSpeech(Long stemId);
 
     Stream<Word> findByStemTermIgnoreCaseOrderByPartOfSpeech(String stem);
+
+
+    Stream<Word> findByStemTermIgnoreCaseContaining(String keyword);
 }
