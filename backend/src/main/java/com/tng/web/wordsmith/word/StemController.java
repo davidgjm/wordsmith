@@ -8,13 +8,14 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @CrossOrigin
 @RestController
 @RequestMapping("/api/stems/v1")
-@Valid
+@Validated
 @RequiredArgsConstructor
 public class StemController {
     private final StemApplicationService applicationService;

@@ -1,9 +1,6 @@
 package com.tng.web.wordsmith.word.internal;
 
-import com.tng.web.wordsmith.word.CreateWordRequest;
-import com.tng.web.wordsmith.word.UpdateWordRequest;
-import com.tng.web.wordsmith.word.WordApplicationService;
-import com.tng.web.wordsmith.word.WordDto;
+import com.tng.web.wordsmith.word.*;
 import com.tng.web.wordsmith.word.domain.model.Stem;
 import com.tng.web.wordsmith.word.domain.model.Word;
 import com.tng.web.wordsmith.word.domain.service.StemService;
@@ -66,7 +63,7 @@ public class WordApplicationServiceImpl implements WordApplicationService {
     @Override
     public WordDto update(UpdateWordRequest request) {
         log.info("Attempting to update word. Request details: {}", request);
-        Word word = findWord(request.getWordId());
+        Word word = findWord(request.getId());
         word.updateFields(request);
         return service.save(word);
     }
@@ -77,9 +74,9 @@ public class WordApplicationServiceImpl implements WordApplicationService {
     }
 
     @Override
-    public List<WordDto> findWordsByStemOrTranslation(String keyword) {
+    public Page<StemFullDto> findWordsByStemFuzzy(String keyword) {
         log.info("Attempting to find words with stem/meaning like {}", keyword);
-        return service.findWordsByStemOrMeaningFuzzy(keyword);
+        return stemService.findStemsByKeyword(keyword);
     }
 
     private Word findWord(Long wordId) {

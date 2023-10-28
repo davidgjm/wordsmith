@@ -17,4 +17,6 @@ public interface StemRepository extends BaseRepository<Stem> {
     List<Long> findAllIds();
 
     Page<Stem> findByIdInOrderByCreated(List<Long> stemIds, Pageable pageRequest);
+
+    Page<Stem> findByTermIgnoreCaseContaining(String keyword, Pageable pageRequest);
 }

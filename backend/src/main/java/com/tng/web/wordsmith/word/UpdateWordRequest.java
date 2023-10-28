@@ -14,5 +14,5 @@ public final class UpdateWordRequest extends BaseWordDto {
 
     @Positive
     @NotNull
-    private Long wordId;
+    private Long id;
 }

@@ -1,6 +1,5 @@
 package com.tng.web.wordsmith.word;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tng.web.wordsmith.word.domain.model.Stem;
 import jakarta.validation.Valid;
@@ -21,7 +20,7 @@ public final class StemDto {
     @JsonProperty(required = true)
     private String term;
 
-    @JsonInclude(value = JsonInclude.Include.NON_EMPTY)
+//    @JsonInclude(value = JsonInclude.Include.NON_EMPTY)
     private String ipa;
 
     private String note;

@@ -35,7 +35,7 @@ public class Word extends BaseAuditEntity {
     private Stem stem;
 
     @NotNull
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private PartOfSpeech partOfSpeech;
 
     @Column(length = 64)
@@ -70,6 +70,12 @@ public class Word extends BaseAuditEntity {
         }
     }
 
+    public void setVariants(List<String> variants) {
+        if (!CollectionUtils.isEmpty(variants)) {
+            this.variants = variants;
+        }
+    }
+
     /**
      * Update entity properties with information included in the provided DTO.
      *
@@ -95,7 +101,7 @@ public class Word extends BaseAuditEntity {
         setTranslation(request.getTranslation());
         setExplanation(request.getExplanation());
         setExample(request.getExample());
-        this.addVariants(request.getVariants());
+        setVariants(request.getVariants());
     }
 
     public void updateFields(UpdateWordRequest request) {
@@ -107,7 +113,7 @@ public class Word extends BaseAuditEntity {
         setTranslation(request.getTranslation());
         setExplanation(request.getExplanation());
         setExample(request.getExample());
-        this.addVariants(request.getVariants());
+        setVariants(request.getVariants());
     }
 
 

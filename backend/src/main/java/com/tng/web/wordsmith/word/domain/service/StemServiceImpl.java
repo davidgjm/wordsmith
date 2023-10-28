@@ -1,8 +1,10 @@
 package com.tng.web.wordsmith.word.domain.service;
 
 import com.tng.web.wordsmith.word.StemDto;
+import com.tng.web.wordsmith.word.StemFullDto;
 import com.tng.web.wordsmith.word.domain.model.Stem;
 import com.tng.web.wordsmith.word.domain.repository.StemRepository;
+import com.tng.web.wordsmith.word.internal.StemDtoFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -98,5 +100,13 @@ public class StemServiceImpl implements StemService {
     @Override
     public Page<Stem> findAll(Pageable pageable) {
         return repository.findAll(pageable);
+    }
+
+    @Override
+    public Page<StemFullDto> findStemsByKeyword(String keyword) {
+        log.info("Searching stems by keyword {}", keyword);
+        return repository.findByTermIgnoreCaseContaining(keyword,Pageable.unpaged())
+                .map(StemDtoFactory::recordFrom)
+                ;
     }
 }

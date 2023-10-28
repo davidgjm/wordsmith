@@ -4,19 +4,20 @@ import com.tng.web.wordsmith.infrastructure.web.ApiResponse;
 import com.tng.web.wordsmith.infrastructure.web.PaginationCriteria;
 import com.tng.web.wordsmith.infrastructure.web.SlicedResponse;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @CrossOrigin
 @RestController
 @RequestMapping("/api/words/v1")
-@Valid
+@Validated
 @RequiredArgsConstructor
 public class WordController {
     private final WordApplicationService applicationService;
@@ -58,14 +59,14 @@ public class WordController {
     @PutMapping("/{wordId}")
     public ApiResponse<WordDto> updateWord(@NotNull @Positive @PathVariable Long wordId, @NotNull @Valid @RequestBody UpdateWordRequest request) {
         log.info("Updating word for {}", wordId);
-        request.setWordId(wordId);
+        request.setId(wordId);
         return ApiResponse.from(applicationService.update(request));
     }
 
     @GetMapping("/search/words")
-    public SlicedResponse<WordDto> searchWordsByStemOrTranslation(@NotBlank @Min(value = 3) String keyword) {
+    public SlicedResponse<StemFullDto> searchWordsByStemOrTranslation(@NotBlank @Length(min = 3, max = 40) @RequestParam String keyword) {
         log.info("Received request to search stem or words with keyword {}", keyword);
         keyword = keyword.trim();
-        return SlicedResponse.from(applicationService.findWordsByStemOrTranslation(keyword));
+        return SlicedResponse.from(applicationService.findWordsByStemFuzzy(keyword));
     }
 }

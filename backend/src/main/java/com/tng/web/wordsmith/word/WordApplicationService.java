@@ -23,5 +23,5 @@ public interface WordApplicationService {
 
     WordDto findWordById(@NotNull @Positive Long wordId);
 
-    List<WordDto> findWordsByStemOrTranslation(@NotBlank String keyword);
+    Page<StemFullDto> findWordsByStemFuzzy(@NotBlank String keyword);
 }

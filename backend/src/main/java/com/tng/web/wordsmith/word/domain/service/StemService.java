@@ -1,6 +1,7 @@
 package com.tng.web.wordsmith.word.domain.service;
 
 import com.tng.web.wordsmith.word.StemDto;
+import com.tng.web.wordsmith.word.StemFullDto;
 import com.tng.web.wordsmith.word.domain.model.Stem;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -27,4 +28,6 @@ public interface StemService {
     Page<Stem> pickRandomStems(@Positive int count, Pageable pageable);
 
     Page<Stem> findAll(Pageable pageable);
+
+    Page<StemFullDto> findStemsByKeyword(@NotBlank String keyword);
 }
