@@ -35,6 +35,14 @@ a,
   color: #909399;
 }
 
+.start {
+  padding-right: 2px;
+}
+
+.end {
+  padding-left: 1rem;
+}
+
 .material-symbols-outlined.xlarge {
   font-size: 48px; 
   font-variation-settings: 'wght' 400, 'GRAD' 0, 'opsz' 48;
@@ -65,5 +73,11 @@ a,
   a:hover {
     background-color: hsla(160, 100%, 37%, 0.2);
   }
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 

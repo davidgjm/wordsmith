@@ -4,5 +4,5 @@ defineProps({
 })
 </script>
 <template>
-  <span class="material-symbols-outlined" >{{ icon }}</span>
+  <span class="material-symbols-outlined">{{ icon }}</span>
 </template>
