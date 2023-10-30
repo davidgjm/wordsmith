@@ -1,7 +1,7 @@
 package com.tng.web.wordsmith.word.domain.model;
 
 import com.tng.web.wordsmith.infrastructure.data.BaseAuditEntity;
-import com.tng.web.wordsmith.infrastructure.data.PartOfSpeech;
+import com.tng.web.wordsmith.word.domain.vo.PartOfSpeech;
 import com.tng.web.wordsmith.infrastructure.data.converters.StringListConverter;
 import com.tng.web.wordsmith.word.CreateWordRequest;
 import com.tng.web.wordsmith.word.UpdateWordRequest;
@@ -90,6 +90,7 @@ public class Word extends BaseAuditEntity {
         setTranslation(dto.getTranslation());
         setExplanation(dto.getExplanation());
         setExample(dto.getExample());
+        setVariants(dto.getVariants());
     }
 
     public void updateFields(CreateWordRequest request) {

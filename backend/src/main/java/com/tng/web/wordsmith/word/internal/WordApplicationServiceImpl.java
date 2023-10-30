@@ -26,7 +26,7 @@ public class WordApplicationServiceImpl implements WordApplicationService {
 
     @Override
     public WordDto addWord(WordDto wordDto) {
-        log.info("Attempting to added word {}", wordDto);
+        log.info("Attempting to add word {}", wordDto);
         var word = service.addWord(wordDto);
         return WordDto.from(word);
     }

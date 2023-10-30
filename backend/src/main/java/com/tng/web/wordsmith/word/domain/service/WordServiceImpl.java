@@ -31,6 +31,7 @@ public class WordServiceImpl implements WordService {
         var stem = stemService.save(dto.getStem());
         Word word = new Word();
         word.setStem(stem);
+
         word.updateFields(dto);
         return repository.saveAndFlush(word);
     }

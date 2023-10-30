@@ -1,4 +1,4 @@
-package com.tng.web.wordsmith.infrastructure.data;
+package com.tng.web.wordsmith.word.domain.vo;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -9,23 +9,26 @@ import java.util.stream.Stream;
 @Getter
 public enum PartOfSpeech {
     NOUN("n.", "Noun"),
-    PRONOUN("pron.", "pronoun"),
-    VERB("verb.", "transitive verb"),
-    VERB_TRANSITIVE("vt.", "transitive verb"),
-    VERB_INTRANSITIVE("vi.", "intransitive verb"),
-    ADJECTIVE("adj.", "adjective"),
+    ADJECTIVE("adj.", "Adjective"),
+    NUMBER("num.", "Number"),
+    PRONOUN("pron.", "Pronoun"),
+    VERB("v.", "Verb"),
+    VERB_TRANSITIVE("vt.", "Transitive verb"),
+    VERB_INTRANSITIVE("vi.", "Intransitive verb"),
+    VERB_AUXILIARY("v.aux.", "Auxiliary verb"),
     ADVERB("adv.", "Adverb"),
-    PREPOSITION("prep.", "PREPOSITION"),
-    CONJUNCTION("conj", "CONJUNCTION"),
-    INTERJECTION("inter","INTERJECTION")
+    ARTICLE("art.", "Article"),
+    PREPOSITION("prep.", "Preposition"),
+    CONJUNCTION("conj", "Conjunction"),
+    INTERJECTION("int.","Interjections")
     ;
 
     private final String code;
-    private final String fullForm;
+    private final String description;
 
-    PartOfSpeech(String code, String fullForm) {
+    PartOfSpeech(String code, String description) {
         this.code = code;
-        this.fullForm = fullForm;
+        this.description = description;
     }
 
     public static PartOfSpeech resolve(String code) {

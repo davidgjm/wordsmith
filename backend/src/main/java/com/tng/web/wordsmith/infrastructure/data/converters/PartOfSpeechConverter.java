@@ -1,6 +1,6 @@
 package com.tng.web.wordsmith.infrastructure.data.converters;
 
-import com.tng.web.wordsmith.infrastructure.data.PartOfSpeech;
+import com.tng.web.wordsmith.word.domain.vo.PartOfSpeech;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import org.springframework.util.StringUtils;
