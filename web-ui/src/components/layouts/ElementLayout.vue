@@ -3,7 +3,7 @@ import { RouterView, RouterLink } from 'vue-router'
 import MaterialSymbol from '../icons/MaterialSymbol.vue';
 </script>
 <template>
-  <div>
+  <main>
     <el-container>
       <el-header height="200">
         <el-menu
@@ -33,7 +33,7 @@ import MaterialSymbol from '../icons/MaterialSymbol.vue';
         <RouterView />
       </el-main>
     </el-container>
-  </div>
+  </main>
 </template>
 
 <style scoped>
