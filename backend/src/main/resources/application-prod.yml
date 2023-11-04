@@ -1,0 +1,15 @@
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/wordsmith
+    username: ws
+    password: ws2023
+  jpa:
+    properties:
+      hibernate:
+        format_sql: false
+    show-sql: true
+########################################################################################################################
+
+app:
+  stem-selection-size: 20
