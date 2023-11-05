@@ -2,7 +2,7 @@
 import { ref, reactive, onMounted, nextTick } from 'vue'
 import { ElInput, ElMessage, ElMessageBox } from 'element-plus'
 // import { FormInstance, FormRules } from 'element-plus'
-import { Check, EditPen, Plus } from '@element-plus/icons-vue'
+import { Check, EditPen, Plus,DocumentAdd } from '@element-plus/icons-vue'
 import MaterialSymbol from '../components/icons/MaterialSymbol.vue'
 import api from 'axios'
 
@@ -35,8 +35,6 @@ const findWordsbyStem = async function () {
   const res = await api.get(`/words/v1/search/words?keyword=${keyword.value}`)
   const data = res.data.data
   selectedStems.value = data
-
-  console.log(data)
   data.forEach((element) => {
     element.editMode = false
     element.words.forEach((word) => {
@@ -133,6 +131,8 @@ const loadPartsOfSpeech = async function () {
 const createWordDialogVisible = ref(false)
 const addWordDialogVisible = ref(false)
 const formLabelWidth = '140px'
+
+const createWordFormRef = ref(null)
 const addWordFormRef = ref(null)
 const createWordForm = reactive({
   stem: {
@@ -170,6 +170,8 @@ const submitNewWordForm = async function(){
   try {
     const result = await api.post('/words/v1', createWordForm)
     console.log('response', result)
+    resetForm(createWordFormRef)
+    createWordForm.stem.term = ''
   } catch (error) {
     if (error.response) {
       ElMessage({
@@ -178,6 +180,11 @@ const submitNewWordForm = async function(){
       })
     }
   }
+}
+
+const keyComboSubmitForm = function (){
+  console.log('key combination fired! submit form through shortcuts' )
+  submitNewWordForm()
 }
 
 const showAddWordDialog= function(stemId) {
@@ -192,7 +199,7 @@ const submitAddWordForm = async function() {
     const result = await api.post(`/stems/v1/${addWordForm.value.stemId}/words`, addWordForm.value)
     console.log('response', result)
     resetForm(addWordFormRef)
-    findWordsbyStem()
+    await findWordsbyStem()
   } catch (error) {
     if (error.response) {
       ElMessage({
@@ -207,6 +214,7 @@ const submitAddWordForm = async function() {
 const resetForm = function(formRef) {
   if(!formRef) return
   formRef.value.resetFields()
+  formRef.resetFields()
 }
 
 onMounted(() => {
@@ -389,14 +397,14 @@ onMounted(() => {
     </el-tab-pane>
   </el-tabs>
 
-  <el-dialog v-model="createWordDialogVisible" title="Create word">
-    <el-form :model="createWordForm" label-position="left" :rules="rules">
+  <el-dialog v-model="createWordDialogVisible" title="Create word" @keyup.alt.enter.exact="keyComboSubmitForm(this)">
+    <el-form :model="createWordForm" label-position="left" :rules="rules" ref="createWordFormRef">
       <el-card>
         <el-form-item label="Term" :label-width="formLabelWidth" prop="term">
           <el-input v-model="createWordForm.stem.term" autocomplete="off" />
         </el-form-item>
         <el-form-item label="Term IPA" :label-width="formLabelWidth">
-          <el-input v-model="createWordForm.stem.pa" autocomplete="off" />
+          <el-input v-model="createWordForm.stem.ipa" autocomplete="off" />
         </el-form-item>
         <el-form-item label="Term Note" :label-width="formLabelWidth">
           <el-input v-model="createWordForm.stem.note" autocomplete="off" />
@@ -446,7 +454,7 @@ onMounted(() => {
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="createWordDialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="submitNewWordForm"> Confirm </el-button>
+        <el-button type="primary"  @click="submitNewWordForm"> Confirm </el-button>
       </span>
     </template>
   </el-dialog>
@@ -457,7 +465,7 @@ onMounted(() => {
 <el-dialog v-model="addWordDialogVisible" title="Add word to existing stem">
 <el-form :model="addWordForm" label-position="left" :rules="rules" ref="addWordFormRef">
   <el-form-item label="IPA" :label-width="formLabelWidth">
-    <el-input v-model="addWordForm.stemId" readonly />
+    <el-input v-model="addWordForm.ipa" />
   </el-form-item>
   <el-form-item label="Part of Speech" :label-width="formLabelWidth" prop="partOfSpeech">
     <el-select v-model="addWordForm.partOfSpeech" 
@@ -471,9 +479,6 @@ onMounted(() => {
         :value="item.code"
       />
     </el-select>
-  </el-form-item>
-  <el-form-item label="IPA" :label-width="formLabelWidth">
-    <el-input v-model="addWordForm.ipa" autocomplete="off" />
   </el-form-item>
   <el-form-item label="Variants" :label-width="formLabelWidth">
     <el-select

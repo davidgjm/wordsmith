@@ -43,6 +43,28 @@ a,
   padding-left: 1rem;
 }
 
+@font-face {
+  font-family: CharisSILW;
+  src: local("Charis SIL"),url("/public/fonts/CharisSIL/CharisSIL-Regular.woff2") format("woff2"), url("/public/fonts/CharisSIL/CharisSIL-Regular.woff") format("woff");
+}
+@font-face {
+  font-family: CharisSILW;
+  font-style: italic;
+  src: local("Charis SIL"),url("/public/fonts/CharisSIL/CharisSIL-Italic.woff2") format("woff2"), url("/public/fonts/CharisSIL/CharisSIL-Italic.woff") format("woff");
+}
+@font-face {
+  font-family: CharisSILW;
+  font-weight: bold;
+  src: local("Charis SIL"),url("/public/fonts/CharisSIL/CharisSIL-Bold.woff2") format("woff2"), url("/public/fonts/CharisSIL/CharisSIL-Bold.woff") format("woff");
+}
+@font-face {
+  font-family: CharisSILW;
+  font-weight: bold;
+  font-style: italic;
+  src: local("Charis SIL"),url("/public/fonts/CharisSIL/CharisSIL-BoldItalic.woff2") format("woff2"), url("/public/fonts/CharisSIL/CharisSIL-BoldItalic.woff") format("woff");
+}
+
+
 .material-symbols-outlined.xlarge {
   font-size: 48px; 
   font-variation-settings: 'wght' 400, 'GRAD' 0, 'opsz' 48;
@@ -81,3 +103,7 @@ a,
   align-items: center;
 }
 
+.ipa {
+  font-family: CharisSILW;
+  font-size: xx-large !important;
+}

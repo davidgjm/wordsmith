@@ -2,8 +2,6 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/wordsmith
-    username: ws
-    password: ws2023
   jpa:
     properties:
       hibernate:
