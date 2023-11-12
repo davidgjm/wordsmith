@@ -3,12 +3,15 @@ package com.tng.web.wordsmith.challenges.internal;
 import com.tng.web.wordsmith.challenges.ChallengeApplicationService;
 import com.tng.web.wordsmith.challenges.ChallengeRecordDto;
 import com.tng.web.wordsmith.challenges.domain.service.ChallengeService;
+import com.tng.web.wordsmith.infrastructure.web.ApiResponse;
 import com.tng.web.wordsmith.infrastructure.web.SlicedResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -29,9 +32,9 @@ public class ChallengeApplicationServiceImpl implements ChallengeApplicationServ
     }
 
     @Override
-    public SlicedResponse<ChallengeRecordDto> findRecordsByStemId(Long stemId, Pageable pageRequest) {
-        log.info("Finding all challenge records for stem {} with page request {}", stemId, pageRequest);
-        var page = service.findByStemId(stemId, pageRequest).map(ChallengeRecordDto::from);
-        return new SlicedResponse<>(page);
+    public ApiResponse<List<ChallengeRecordDto>> findRecordsByStemId(Long stemId) {
+        log.info("Finding all challenge records for stem {}", stemId);
+        var page = service.findByStemId(stemId, Pageable.unpaged()).map(ChallengeRecordDto::from);
+        return ApiResponse.from(page.getContent());
     }
 }

@@ -1,7 +1,7 @@
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/wordsmith
+    url: jdbc:postgresql://localhost:5432/wordsmithdev
   jpa:
     properties:
       hibernate:

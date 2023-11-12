@@ -1,14 +1,16 @@
 package com.tng.web.wordsmith.challenges;
 
+import com.tng.web.wordsmith.infrastructure.web.ApiResponse;
 import com.tng.web.wordsmith.infrastructure.web.SlicedResponse;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface ChallengeApplicationService {
 
     ChallengeRecordDto save(ChallengeRecordDto dto);
 
     SlicedResponse<ChallengeRecordDto> findRecords();
-    SlicedResponse<ChallengeRecordDto> findRecordsByStemId(@NotNull @Positive Long stemId, Pageable pageRequest);
+    ApiResponse<List<ChallengeRecordDto>> findRecordsByStemId(@NotNull @Positive Long stemId);
 }
