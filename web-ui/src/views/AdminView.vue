@@ -13,7 +13,7 @@ const clearSelectedWords = function () {
   selectedStems.value = []
 }
 
-const toggleEditMode = function (word) {
+const toggleEditMode = function (word) {  
   word.editMode = !word.editMode
 }
 
